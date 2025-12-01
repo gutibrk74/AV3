@@ -1,0 +1,17 @@
+# Node modules
+Backend-Aerocode/node_modules/
+Frontend-Aerocode/node_modules/
+
+# Environment variables
+Backend-Aerocode/.env
+
+# Build / dist folders
+Frontend-Aerocode/dist/
+Backend-Aerocode/dist/
+
+# Logs
+*.log
+
+# System files
+.DS_Store
+Thumbs.db

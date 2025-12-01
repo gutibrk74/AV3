@@ -1,0 +1,443 @@
+:root {
+  --bg: #f4f7fb;
+  --panel: #ffffff;
+  --muted: #6b7280;
+  --accent: #0f62fe;
+  --border: rgba(15, 98, 254, 0.12);
+  --card-shadow: 0 8px 24px rgba(15, 98, 254, 0.06);
+  --radius: 12px;
+  --text: #0f1724;
+}
+
+.btn-sm {
+  padding: 6px 14px;
+  background: #F4F4F5;
+  border: 1px solid #D4D4D8;
+  border-radius: 8px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.btn-sm:hover {
+  background: #E4E4E7;
+}
+
+.btn-sm.primary {
+  background: #3b82f6;
+  border-color: #3b82f6;
+  color: white;
+}
+
+.btn-sm.primary:hover {
+  background: #2563eb;
+}
+
+.btn-sm.danger {
+  background: #EF4444;
+  border-color: #EF4444;
+  color: white;
+}
+
+.btn-sm.danger:hover {
+  background: #DC2626;
+}
+
+/* aeronaves detalhes */
+.detalhes-container {
+  padding: 20px 30px;
+}
+
+.titulo-pagina {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 25px;
+  color: #0a2a43;
+}
+
+.detalhes-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+}
+
+/* Card moderno */
+.detalhes-card {
+  background: #0d2f52;
+  color: white;
+  padding: 25px;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  transition: 0.2s ease;
+}
+
+.detalhes-card:hover {
+  transform: translateY(-3px);
+}
+
+/* Títulos */
+.detalhes-card h3 {
+  margin-bottom: 12px;
+  font-size: 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+  padding-bottom: 6px;
+}
+
+/* Texto vazio */
+.vazio {
+  opacity: 0.6;
+  font-style: italic;
+}
+.detalhes-card {
+  animation: fade 0.4s ease forwards;
+  opacity: 0;
+}
+
+@keyframes fade {
+  to {
+    opacity: 1;
+  }
+}
+
+
+
+/* ==== CARDS ==== */
+.card {
+  background: #003057 !important;   /* Azul SAAB */
+  color: white !important;
+  padding: 20px;
+  border-radius: 12px;
+  min-width: 180px;
+  font-size: 20px;
+  text-align: center;
+  font-weight: bold;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+}
+
+.card span {
+  color: #FFD700 !important;         /* Amarelo cockpit */
+  font-size: 26px;
+  font-weight: bold;
+}
+
+
+
+/* ==== ÁREA DOS GRÁFICOS ==== */
+.chart-box {
+  width: 100%;
+  max-width: 580px;                 /* controla largura */               
+  height: 340px;                    /* controla altura */
+  margin: 40px auto;
+  padding: 20px;
+  background: #ffffff !important;
+  border-radius: 18px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* TITULO */
+.chart-title {
+  text-align: center;
+  margin-bottom: 12px;
+  font-weight: 600;
+  font-size: 18px;
+  color: #003057;
+}
+
+/* === CANVAS === */
+.chart-box canvas {
+  max-height: 260px !important;   /* impede gráficos gigantes */
+}
+
+/* === AJUSTE DE BORDA DOS GRÁFICOS === */
+canvas {
+  border-radius: 14px;
+}
+
+/* Borda mais fina e clara nos gráficos */
+.chart-border-light {
+  border: 1.7px solid rgba(0, 48, 87, 0.18) !important;
+  border-radius: 18px;
+}
+
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+
+.app {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+  background: linear-gradient(180deg, #ffffff, #f1f5f9);
+  padding: 20px;
+  border-right: 1px solid var(--border);
+}
+
+.brand {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.logo {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #e6f0ff, #d6e7ff);
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--border);
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.menu a {
+  padding: 10px 12px;
+  border-radius: 10px;
+  color: var(--text);
+  text-decoration: none;
+  border: 1px solid transparent;
+}
+
+.menu a:hover {
+  background: rgba(15, 98, 254, 0.06);
+  border-color: var(--border);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.4));
+}
+
+.btn {
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: transparent;
+  cursor: pointer;
+}
+
+.btn.primary {
+  background: var(--accent);
+  color: white;
+  border-color: transparent;
+  box-shadow: var(--card-shadow);
+}
+
+.content {
+  padding: 22px;
+}
+
+.card {
+  background: var(--panel);
+  padding: 14px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  box-shadow: var(--card-shadow);
+}
+
+.placeholder {
+  height: 220px;
+  border: 1px dashed var(--border);
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  color: var(--muted);
+}
+
+.table {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--panel);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 12px;
+  border-top: 1px solid rgba(0,0,0,0.03);
+}
+
+/* ===========================
+   BLOCO ADICIONAL - LOGIN
+   =========================== */
+
+/* wrapper */
+.login-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 72px); 
+  padding: 32px; 
+  background: transparent; 
+}
+
+/* .card
+   .login-page */
+.login-page .card {
+  width: 380px;            
+  max-width: calc(100% - 48px); 
+  padding: 28px;         
+  margin: 0;              
+  text-align: left;      
+  box-shadow: 0 12px 30px rgba(15,98,254,0.06);
+  border-radius: 12px;
+}
+
+/* títulos e espaçamentos específicos do card de login */
+.login-page .card h2 {
+  margin: 0 0 14px 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+/* full width e espaçamento */
+.login-page .card .form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.login-page .card .form .field label {
+  font-size: 13px;
+  margin-bottom: 6px;
+  color: var(--muted);
+}
+
+.login-page .card input,
+.login-page .card select,
+.login-page .card textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid rgba(15,98,254,0.14);
+  border-radius: 8px;
+  font-size: 14px;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+
+/* melhorar focus */
+.login-page .card input:focus,
+.login-page .card select:focus,
+.login-page .card textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 6px 20px rgba(15,98,254,0.06);
+  outline: none;
+}
+
+/* botão do card */
+.login-page .card .btn {
+  display: inline-block;
+  width: 100%;
+  padding: 10px 12px;
+  text-align: center;
+  border-radius: 8px;
+}
+
+/* botão principal do login */
+.login-page .card .btn.primary {
+  background: var(--accent);
+  color: white;
+  border: none;
+  box-shadow: 0 8px 22px rgba(15,98,254,0.08);
+}
+
+/* LOGIN CENTRALIZADO */
+.login-container {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #eef2f7;
+}
+
+/* CARD DE LOGIN */
+.login-card {
+  background: #023059;
+  padding: 35px 45px;
+  width: 380px;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+  text-align: center;
+  color: white;
+}
+
+/* FORM */
+.login-form {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* CAMPOS */
+.login-field label {
+  font-size: 14px;
+  color: #cdd8e3;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.login-field input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 6px;
+  border: none;
+  outline: none;
+  background: #f0f4fa;
+  font-size: 15px;
+}
+
+/* BOTÃO */
+.login-btn {
+  margin-top: 10px;
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 6px;
+  text-align: center;
+}
+
+
+/* garante responsividade, amén */
+@media (max-width: 480px) {
+  .app {
+    grid-template-columns: 1fr; /*colapse, omg */
+  }
+  .login-page .card {
+    width: 100%;
+    max-width: 420px;
+    padding: 20px;
+  }
+}

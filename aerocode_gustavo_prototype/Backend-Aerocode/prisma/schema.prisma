@@ -1,0 +1,61 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Usuario {
+  id        Int      @id @default(autoincrement())
+  nome      String
+  usuario   String   @unique
+  senha     String
+  role      String
+  createdAt DateTime @default(now())
+}
+
+model Aeronave {
+  id      Int      @id @default(autoincrement())
+  nome    String
+  tipo    String
+
+  pecas    Peca[]
+  etapas   Etapa[]
+  testes   Teste[]
+}
+
+model Peca {
+  id         Int      @id @default(autoincrement())
+  nome       String
+  codigo     String
+  aeronaveId Int
+
+  aeronave   Aeronave @relation(fields: [aeronaveId], references: [id], onDelete: Cascade)
+}
+
+model Etapa {
+  id         Int      @id @default(autoincrement())
+  nome       String
+  dias       Int
+  responsavel String
+  aeronaveId Int
+
+  aeronave   Aeronave @relation(fields: [aeronaveId], references: [id], onDelete: Cascade)
+}
+
+model Teste {
+  id          Int     @id @default(autoincrement())
+  tipo        String
+  resultado   String
+  observacoes String?
+  aeronaveId  Int
+
+  aeronave    Aeronave @relation(fields: [aeronaveId], references: [id], onDelete: Cascade)
+}
+model Funcionario {
+  id    Int    @id @default(autoincrement())
+  nome  String
+  cargo String
+}
