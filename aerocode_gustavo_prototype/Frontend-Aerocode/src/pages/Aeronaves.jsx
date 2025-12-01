@@ -7,7 +7,7 @@ import { useRole } from "../hooks/UseRole";
 export default function Aeronaves() {
 
   const navigate = useNavigate();
-  const role = useRole(); // <-- PERMISSÃO
+  const role = useRole(); 
 
   const [aeronaves, setAeronaves] = useState([]);
 

@@ -33,6 +33,7 @@ export default function Pecas() {
 
   async function criarPeca(e) {
     e.preventDefault();
+
     await api.post("/pecas", {
       nome,
       codigo,
@@ -44,6 +45,13 @@ export default function Pecas() {
     setAeronaveId("");
 
     carregarTudo();
+  }
+
+  function ativarEdicao(peca) {
+    setEditId(peca.id);
+    setEditNome(peca.nome);
+    setEditCodigo(peca.codigo);
+    setEditAero(peca.aeronaveId);
   }
 
   async function salvarEdicao(id) {
@@ -67,7 +75,7 @@ export default function Pecas() {
     <div>
       <h2>Peças</h2>
 
-      {/* FORM DE CRIAÇÃO — não aparece para OPERADOR */}
+      {/* FORM DE CRIAÇÃO */}
       {role !== "OPERADOR" && (
         <form onSubmit={criarPeca} className="form" style={{ marginBottom: 20 }}>
 
@@ -149,7 +157,10 @@ export default function Pecas() {
                 {/* Aeronave */}
                 <td>
                   {editId === p.id ? (
-                    <select value={editAero} onChange={e => setEditAero(e.target.value)}>
+                    <select
+                      value={editAero}
+                      onChange={e => setEditAero(e.target.value)}
+                    >
                       {aeronaves.map(a => (
                         <option key={a.id} value={a.id}>{a.nome}</option>
                       ))}
@@ -164,26 +175,37 @@ export default function Pecas() {
                   {editId === p.id ? (
                     <>
                       {role !== "OPERADOR" && (
-                        <button className="btn-sm primary" onClick={() => salvarEdicao(p.id)}>
+                        <button
+                          className="btn-sm primary"
+                          onClick={() => salvarEdicao(p.id)}
+                        >
                           Salvar
                         </button>
                       )}
-                      <button className="btn-sm danger" onClick={() => setEditId(null)}>
+
+                      <button
+                        className="btn-sm danger"
+                        onClick={() => setEditId(null)}
+                      >
                         Cancelar
                       </button>
                     </>
                   ) : (
                     <>
-                      {/* EDITAR: ADMIN e ENGENHEIRO */}
                       {role !== "OPERADOR" && (
-                        <button className="btn-sm primary" onClick={() => setEditId(p.id)}>
+                        <button
+                          className="btn-sm primary"
+                          onClick={() => ativarEdicao(p)}
+                        >
                           Editar
                         </button>
                       )}
 
-                      {/* EXCLUIR: apenas ADMIN */}
                       {role === "ADMIN" && (
-                        <button className="btn-sm danger" onClick={() => excluir(p.id)}>
+                        <button
+                          className="btn-sm danger"
+                          onClick={() => excluir(p.id)}
+                        >
                           Excluir
                         </button>
                       )}
