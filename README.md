@@ -173,8 +173,8 @@ O sistema utiliza controle de permissões baseado no papel do usuário. Cada per
 
 ### **OPERADOR**
 - Tem acesso apenas para consulta  
-- Visualiza aeronaves, peças, etapas e testes  
-- Não realiza modificações ou exclusões
+- Visualiza aeronaves, etapas e testes  
+- Apenas consegue realizar testes em conjunto com os Engenheiros
 
 Esse modelo garante segurança e organização das operações internas.
 
