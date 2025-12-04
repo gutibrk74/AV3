@@ -23,22 +23,36 @@ export default function Sidebar() {
       {user && (
         <>
           <nav className="menu">
-            <NavLink to="/dashboard">Dashboard</NavLink>
-            <NavLink to="/aeronaves">Aeronaves</NavLink>
-            <NavLink to="/pecas">Peças</NavLink>
-            <NavLink to="/etapas">Etapas</NavLink>
 
-            {role !== "OPERADOR" && (
-              <NavLink to="/testes">Testes</NavLink>
+            {/* ADMIN vê dashboard — engenheiro e operador NÃO */}
+            {role === "ADMIN" && (
+              <NavLink to="/dashboard">Dashboard</NavLink>
             )}
 
+            {/* AERONAVES — todos veem */}
+            <NavLink to="/aeronaves">Aeronaves</NavLink>
+
+            {/* PEÇAS — só ADMIN e ENGENHEIRO veem */}
+            {role === "ADMIN" || role === "ENGENHEIRO" ? (
+              <NavLink to="/pecas">Peças</NavLink>
+            ) : null}
+
+            {/* ETAPAS — todos veem */}
+            <NavLink to="/etapas">Etapas</NavLink>
+
+            {/* TESTES — todos veem */}
+            <NavLink to="/testes">Testes</NavLink>
+
+            {/* FUNCIONÁRIOS — só ADMIN */}
             {role === "ADMIN" && (
               <NavLink to="/funcionarios">Funcionários</NavLink>
             )}
 
-            {role !== "OPERADOR" && (
+            {/* RELATÓRIO — só ADMIN */}
+            {role === "ADMIN" && (
               <NavLink to="/relatorio">Relatório</NavLink>
             )}
+
           </nav>
 
           <button

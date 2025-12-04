@@ -49,8 +49,8 @@ export default function Testes() {
     setTipo("");
     setResultado("");
     setObs("");
-    setOpen(false);
 
+    setOpen(false);
     carregarTudo();
   }
 
@@ -83,16 +83,14 @@ export default function Testes() {
   return (
     <div>
 
-      {/* Título + botão de criar */}
+      {/* Cabeçalho */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
         <h2>Testes</h2>
 
-        {/* Criar → ADMIN e ENGENHEIRO */}
-        {role !== "OPERADOR" && (
-          <button className="btn" onClick={() => setOpen(true)}>
-            + Registrar Teste
-          </button>
-        )}
+        {/* Criar → ADMIN + ENGENHEIRO + OPERADOR */}
+        <button className="btn" onClick={() => setOpen(true)}>
+          + Registrar Teste
+        </button>
       </div>
 
       {/* Modal */}
@@ -147,7 +145,7 @@ export default function Testes() {
         </ModalForm>
       )}
 
-      {/* TABELA */}
+      {/* Tabela */}
       <div className="table">
         <table>
           <thead>
@@ -207,26 +205,23 @@ export default function Testes() {
                 <td>
                   {editId === t.id ? (
                     <>
-                      {/* ADMIN + ENGENHEIRO podem salvar */}
-                      {role !== "OPERADOR" && (
-                        <button className="btn-sm primary" onClick={() => salvarEdicao(t.id)}>
-                          Salvar
-                        </button>
-                      )}
+                      {/* salvar → ADMIN + ENG + OPERADOR */}
+                      <button className="btn-sm primary" onClick={() => salvarEdicao(t.id)}>
+                        Salvar
+                      </button>
+
                       <button className="btn-sm danger" onClick={() => setEditId(null)}>
                         Cancelar
                       </button>
                     </>
                   ) : (
                     <>
-                      {/* EDITAR: ADMIN e ENGENHEIRO */}
-                      {role !== "OPERADOR" && (
-                        <button className="btn-sm primary" onClick={() => ativarEdicao(t)}>
-                          Editar
-                        </button>
-                      )}
+                      {/* editar → ADMIN + ENG + OPERADOR */}
+                      <button className="btn-sm primary" onClick={() => ativarEdicao(t)}>
+                        Editar
+                      </button>
 
-                      {/* EXCLUIR: somente ADMIN */}
+                      {/* excluir → somente ADMIN */}
                       {role === "ADMIN" && (
                         <button className="btn-sm danger" onClick={() => excluir(t.id)}>
                           Excluir

@@ -6,16 +6,16 @@ import { checkRole } from "../middleware/checkRole.js";
 
 const router = Router();
 
-// visualizar — TODOS
+// VISUALIZAR — TODOS
 router.get("/", authMiddleware, testeController.listar);
 
-// criar — ADMIN ou ENGENHEIRO
-router.post("/", authMiddleware, checkRole("ADMIN", "ENGENHEIRO"), testeController.criar);
+// CRIAR — ADMIN, ENGENHEIRO e OPERADOR
+router.post("/", authMiddleware, checkRole("ADMIN", "ENGENHEIRO", "OPERADOR"), testeController.criar);
 
-// editar — só ADMIN
-router.put("/:id", authMiddleware, checkRole("ADMIN"), testeController.editar);
+// EDITAR — ADMIN, ENGENHEIRO e OPERADOR
+router.put("/:id", authMiddleware, checkRole("ADMIN", "ENGENHEIRO", "OPERADOR"), testeController.editar);
 
-// excluir — só ADMIN
+// EXCLUIR — apenas ADMIN
 router.delete("/:id", authMiddleware, checkRole("ADMIN"), testeController.excluir);
 
 export default router;

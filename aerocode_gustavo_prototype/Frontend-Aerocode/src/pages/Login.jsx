@@ -20,7 +20,7 @@ export default function Login() {
         resp.data.usuario.role
       );
 
-      navigate("/dashboard");
+      navigate("/home");
 
     } catch (e) {
       alert("Usuário ou senha inválidos");

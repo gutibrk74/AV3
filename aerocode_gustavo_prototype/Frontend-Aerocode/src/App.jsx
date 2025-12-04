@@ -13,6 +13,23 @@ import Relatorio from './pages/Relatorio.jsx'
 
 import PrivateRoute from "./components/PrivateRoute.jsx";
 import { AuthProvider } from "./context/AuthContext.jsx";
+import { useContext } from "react";
+import { AuthContext } from "./context/AuthContext.jsx";
+
+
+// 🔥 NOVA ROTA /home QUE DECIDE O REDIRECIONAMENTO PELO CARGO
+function HomeRedirect() {
+  const { user } = useContext(AuthContext);
+
+  if (!user) return <Navigate to="/login" />;
+
+  if (user.role === "ADMIN") return <Navigate to="/dashboard" />;
+  if (user.role === "ENGENHEIRO") return <Navigate to="/aeronaves" />;
+  if (user.role === "OPERADOR") return <Navigate to="/aeronaves" />;
+
+  return <Navigate to="/login" />;
+}
+
 
 export default function App() {
   return (
@@ -26,7 +43,11 @@ export default function App() {
 
               <Route path="/login" element={<Login />} />
 
-              <Route path="/" element={<Navigate to="/dashboard" />} />
+              {/* 🔥 AGORA A ROTA / REDIRECIONA PARA /home */}
+              <Route path="/" element={<Navigate to="/home" />} />
+
+              {/* 🔥 ESTA É A ROTA QUE LÊ O CARGO E REDIRECIONA */}
+              <Route path="/home" element={<HomeRedirect />} />
 
               <Route
                 path="/dashboard"
@@ -105,5 +126,5 @@ export default function App() {
         </div>
       </div>
     </AuthProvider>
-  )
+  );
 }

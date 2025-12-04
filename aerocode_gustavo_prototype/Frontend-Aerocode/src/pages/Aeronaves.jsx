@@ -70,8 +70,8 @@ export default function Aeronaves() {
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
         <h2>Aeronaves</h2>
 
-        {/* ADMIN e ENGENHEIRO podem criar */}
-        {role !== "OPERADOR" && (
+        {/* SOMENTE ADMIN CRIA */}
+        {role === "ADMIN" && (
           <button className="btn" onClick={() => setOpen(true)}>
             + Registrar Aeronave
           </button>
@@ -79,7 +79,7 @@ export default function Aeronaves() {
       </div>
 
       {/* MODAL */}
-      {open && (
+      {open && role === "ADMIN" && (
         <ModalForm title="Registrar Aeronave" onClose={() => setOpen(false)}>
           <form className="form" onSubmit={criarAeronave}>
 
@@ -147,30 +147,32 @@ export default function Aeronaves() {
                 <td>
                   {editId === a.id ? (
                     <>
-                      {role !== "OPERADOR" && (
+                      {/* SOMENTE ADMIN EDITA */}
+                      {role === "ADMIN" && (
                         <button className="btn-sm primary" onClick={() => salvarEdicao(a.id)}>
                           Salvar
                         </button>
                       )}
+
                       <button className="btn-sm danger" onClick={() => setEditId(null)}>
                         Cancelar
                       </button>
                     </>
                   ) : (
                     <>
-                      {/* TODOS podem visualizar */}
+                      {/* TODOS veem detalhes */}
                       <button className="btn-sm primary" onClick={() => navigate(`/aeronaves/${a.id}`)}>
                         Detalhes
                       </button>
 
-                      {/* EDITAR: ADMIN e ENGENHEIRO */}
-                      {role !== "OPERADOR" && (
+                      {/* SOMENTE ADMIN EDITA */}
+                      {role === "ADMIN" && (
                         <button className="btn-sm" onClick={() => ativarEdicao(a)}>
                           Editar
                         </button>
                       )}
 
-                      {/* EXCLUIR: SÓ ADMIN */}
+                      {/* SOMENTE ADMIN EXCLUI */}
                       {role === "ADMIN" && (
                         <button className="btn-sm danger" onClick={() => excluir(a.id)}>
                           Excluir

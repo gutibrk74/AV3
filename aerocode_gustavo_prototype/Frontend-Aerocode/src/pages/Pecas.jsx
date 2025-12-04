@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { api } from "../services/api";
+import ModalForm from "../components/ModalForm.jsx";
 import { useRole } from "../hooks/UseRole";
 
 export default function Pecas() {
@@ -9,7 +10,9 @@ export default function Pecas() {
   const [pecas, setPecas] = useState([]);
   const [aeronaves, setAeronaves] = useState([]);
 
-  // criação
+  // Modal criação
+  const [open, setOpen] = useState(false);
+
   const [nome, setNome] = useState("");
   const [codigo, setCodigo] = useState("");
   const [aeronaveId, setAeronaveId] = useState("");
@@ -31,7 +34,7 @@ export default function Pecas() {
     setAeronaves(a.data);
   }
 
-  async function criarPeca(e) {
+  async function criar(e) {
     e.preventDefault();
 
     await api.post("/pecas", {
@@ -44,14 +47,15 @@ export default function Pecas() {
     setCodigo("");
     setAeronaveId("");
 
+    setOpen(false);
     carregarTudo();
   }
 
-  function ativarEdicao(peca) {
-    setEditId(peca.id);
-    setEditNome(peca.nome);
-    setEditCodigo(peca.codigo);
-    setEditAero(peca.aeronaveId);
+  function ativarEdicao(p) {
+    setEditId(p.id);
+    setEditNome(p.nome);
+    setEditCodigo(p.codigo);
+    setEditAero(p.aeronaveId);
   }
 
   async function salvarEdicao(id) {
@@ -73,45 +77,61 @@ export default function Pecas() {
 
   return (
     <div>
-      <h2>Peças</h2>
 
-      {/* FORM DE CRIAÇÃO */}
-      {role !== "OPERADOR" && (
-        <form onSubmit={criarPeca} className="form" style={{ marginBottom: 20 }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
+        <h2>Peças</h2>
 
-          <div className="field">
-            <label>Nome</label>
-            <input
-              value={nome}
-              onChange={e => setNome(e.target.value)}
-              placeholder="Ex: Painel de Controle"
-            />
-          </div>
+        {/* Criar → somente ADMIN */}
+        {role === "ADMIN" && (
+          <button className="btn" onClick={() => setOpen(true)}>
+            + Registrar Peça
+          </button>
+        )}
+      </div>
 
-          <div className="field">
-            <label>Código</label>
-            <input
-              value={codigo}
-              onChange={e => setCodigo(e.target.value)}
-              placeholder="Ex: PCX-3321"
-            />
-          </div>
+      {/* MODAL DE CRIAÇÃO */}
+      {open && (
+        <ModalForm title="Registrar Peça" onClose={() => setOpen(false)}>
+          <form className="form" onSubmit={criar}>
 
-          <div className="field">
-            <label>Aeronave</label>
-            <select value={aeronaveId} onChange={e => setAeronaveId(e.target.value)}>
-              <option value="">Selecione...</option>
-              {aeronaves.map(a => (
-                <option key={a.id} value={a.id}>{a.nome}</option>
-              ))}
-            </select>
-          </div>
+            <div className="field">
+              <label>Nome</label>
+              <input
+                value={nome}
+                onChange={e => setNome(e.target.value)}
+                placeholder="Ex: Painel de Controle"
+              />
+            </div>
 
-          <button className="btn primary">Salvar</button>
+            <div className="field">
+              <label>Código</label>
+              <input
+                value={codigo}
+                onChange={e => setCodigo(e.target.value)}
+                placeholder="Ex: PCX-3321"
+              />
+            </div>
 
-        </form>
+            <div className="field">
+              <label>Aeronave</label>
+              <select value={aeronaveId} onChange={e => setAeronaveId(e.target.value)}>
+                <option value="">Selecione...</option>
+                {aeronaves.map(a => (
+                  <option key={a.id} value={a.id}>{a.nome}</option>
+                ))}
+              </select>
+            </div>
+
+            <div style={{ display: "flex", justifyContent: "flex-end", gap: 10, marginTop: 12 }}>
+              <button type="button" className="btn" onClick={() => setOpen(false)}>Cancelar</button>
+              <button className="btn primary">Salvar</button>
+            </div>
+
+          </form>
+        </ModalForm>
       )}
 
+      {/* TABELA */}
       <div className="table">
         <table>
           <thead>
@@ -133,10 +153,7 @@ export default function Pecas() {
                 {/* Nome */}
                 <td>
                   {editId === p.id ? (
-                    <input
-                      value={editNome}
-                      onChange={e => setEditNome(e.target.value)}
-                    />
+                    <input value={editNome} onChange={e => setEditNome(e.target.value)} />
                   ) : (
                     p.nome
                   )}
@@ -145,10 +162,7 @@ export default function Pecas() {
                 {/* Código */}
                 <td>
                   {editId === p.id ? (
-                    <input
-                      value={editCodigo}
-                      onChange={e => setEditCodigo(e.target.value)}
-                    />
+                    <input value={editCodigo} onChange={e => setEditCodigo(e.target.value)} />
                   ) : (
                     p.codigo
                   )}
@@ -157,10 +171,7 @@ export default function Pecas() {
                 {/* Aeronave */}
                 <td>
                   {editId === p.id ? (
-                    <select
-                      value={editAero}
-                      onChange={e => setEditAero(e.target.value)}
-                    >
+                    <select value={editAero} onChange={e => setEditAero(e.target.value)}>
                       {aeronaves.map(a => (
                         <option key={a.id} value={a.id}>{a.nome}</option>
                       ))}
@@ -170,42 +181,29 @@ export default function Pecas() {
                   )}
                 </td>
 
-                {/* Ações */}
+                {/* AÇÕES */}
                 <td>
                   {editId === p.id ? (
                     <>
-                      {role !== "OPERADOR" && (
-                        <button
-                          className="btn-sm primary"
-                          onClick={() => salvarEdicao(p.id)}
-                        >
+                      {(role === "ADMIN" || role === "ENGENHEIRO") && (
+                        <button className="btn-sm primary" onClick={() => salvarEdicao(p.id)}>
                           Salvar
                         </button>
                       )}
-
-                      <button
-                        className="btn-sm danger"
-                        onClick={() => setEditId(null)}
-                      >
+                      <button className="btn-sm danger" onClick={() => setEditId(null)}>
                         Cancelar
                       </button>
                     </>
                   ) : (
                     <>
-                      {role !== "OPERADOR" && (
-                        <button
-                          className="btn-sm primary"
-                          onClick={() => ativarEdicao(p)}
-                        >
+                      {(role === "ADMIN" || role === "ENGENHEIRO") && (
+                        <button className="btn-sm primary" onClick={() => ativarEdicao(p)}>
                           Editar
                         </button>
                       )}
 
-                      {role === "ADMIN" && (
-                        <button
-                          className="btn-sm danger"
-                          onClick={() => excluir(p.id)}
-                        >
+                      {(role === "ADMIN" || role === "ENGENHEIRO") && (
+                        <button className="btn-sm danger" onClick={() => excluir(p.id)}>
                           Excluir
                         </button>
                       )}
@@ -216,8 +214,10 @@ export default function Pecas() {
               </tr>
             ))}
           </tbody>
+
         </table>
       </div>
+
     </div>
   );
 }
