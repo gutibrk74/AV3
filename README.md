@@ -264,6 +264,7 @@ O relatório ABNT completo está incluído no repositório com toda a explicaç�
 
 Ele contém:
 
+- Capa ABNT 
 - Introdução  
 - Metodologia  
 - Métricas (latência, resposta, processamento)  
@@ -272,7 +273,7 @@ Ele contém:
 - Tabelas  
 - .env + seeds  
 - Conclusão técnica  
-- Capa ABNT  
+ 
 
 ---
 
